@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'ContextDesk — Grounded knowledge and support',
   description: 'A secure, multi-tenant knowledge and support workspace for small teams.',
+  metadataBase: new URL('https://contextdesk.keepreading52.chatgpt.site'),
+  openGraph: {
+    title: 'ContextDesk',
+    description: 'Grounded knowledge. Better support.',
+    images: ['/og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ContextDesk',
+    description: 'Grounded knowledge. Better support.',
+    images: ['/og.png'],
+  },
 };
 
 export default function RootLayout({
