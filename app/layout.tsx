@@ -15,7 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'ContextDesk — Grounded knowledge and support',
   description: 'A secure, multi-tenant knowledge and support workspace for small teams.',
-  metadataBase: new URL('https://contextdesk.keepreading52.chatgpt.site'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://contextdesk.example.com',
+  ),
   openGraph: {
     title: 'ContextDesk',
     description: 'Grounded knowledge. Better support.',
