@@ -15,8 +15,8 @@ const worker = new Miniflare({
   compatibilityFlags: config.compatibility_flags,
   d1Databases: ['DB'],
   r2Buckets: ['FILES'],
-  assets: { directory: 'dist/client', binding: 'ASSETS' },
-  assets: { directory: 'dist/client', binding: 'ASSETS', routerConfig: { invoke_user_worker_ahead_of_assets: true } },
+    assets: { directory: 'dist/client', binding: 'ASSETS', routerConfig: { invoke_user_worker_ahead_of_assets: true } },
+});
 
 try {
   const db = await worker.getD1Database('DB');
