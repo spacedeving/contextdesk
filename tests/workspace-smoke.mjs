@@ -15,7 +15,7 @@ const worker = new Miniflare({
   compatibilityFlags: config.compatibility_flags,
   d1Databases: ['DB'],
   r2Buckets: ['FILES'],
-    assets: { directory: 'dist/client', binding: 'ASSETS', routerConfig: { has_user_worker: true, invoke_user_worker_ahead_of_assets: true } },
+  assets: { directory: 'dist/client', binding: 'ASSETS', routerConfig: { has_user_worker: true, invoke_user_worker_ahead_of_assets: true } },
 });
 
 try {
@@ -31,11 +31,19 @@ try {
       headers.set('oai-authenticated-user-id', identity);
       headers.set('oai-authenticated-user-email', identity + '@example.test');
     }
-    if (body && !(body instanceof FormData)) headers.set('content-type', 'application/json');
+    let payload;
+    if (body instanceof FormData) {
+      const multipart = new Request('http://localhost', { method: 'POST', body });
+      headers.set('content-type', multipart.headers.get('content-type'));
+      payload = await multipart.arrayBuffer();
+    } else if (body) {
+      headers.set('content-type', 'application/json');
+      payload = JSON.stringify(body);
+    }
     const response = await worker.dispatchFetch('http://localhost' + path, {
       method: body ? 'POST' : 'GET',
       headers,
-      body: body instanceof FormData ? body : JSON.stringify(body),
+      body: payload,
     });
     const content = await response.text();
     assert.equal(response.status, status, path + ' ' + content);
