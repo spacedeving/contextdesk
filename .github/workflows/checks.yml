@@ -2,7 +2,8 @@ name: ContextDesk checks
 on: [push, pull_request]
 jobs:
   workspace:
-    runs-on: ubuntu-latest
+    # Keep the runner OS compatible with the pinned Playwright version.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
